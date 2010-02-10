@@ -1,13 +1,29 @@
 Netatalk
 ========
 
+If you don't speak German but want to work on this project, please let me know by adding
+a comment to:
 
-Stand
------
+tba
 
-- db kompiliert als 4.2, aber noch nicht als 4.8.
-- Netatalk produziert einen Cross Compiling Fehler, wenn man nicht das configure File patched.
-- Netatalk kompiliert nicht.
+
+Stand der Dinge
+---------------
+
+Die Library db-4.8 kompiliert, das .mk ist aber sicher noch verbesserungswürdig, insbesondere
+bei den Zeilen mit FIXME.
+
+Netatalk produziert einen Fehler (checking Berkeley DB library (-ldb47)... configure: error:
+cannot run test program while cross compiling). Um den zu lösen, muss man - als Workaround - 
+nach dem ersten, fehlerhaften Lauf den Patch patches-OFF/100-configure.patch anwenden:
+
+cd source/netatalk-2.0.5 && patch <../../make/netatalk/patches-OFF/100-configure.patch
+
+Danach kompiliert Netatalk bis zu folgendem Fehler:
+
+ad_open.c:715: error: expected ';', ',' or ')' before '_U_'
+
+Die CGI fürs Freetz Backend, Init Scripts etc fehlen noch.
 
 
 Installation
@@ -42,6 +58,7 @@ FREETZ_LIB_libdb
 
 Links
 -----
+* Forum: tba
 * Berkeley DB: http://www.oracle.com/technology/software/products/berkeley-db/db
 * Netatalk: http://netatalk.sourceforge.net
 * Github: http://help.github.com/forking
