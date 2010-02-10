@@ -1,0 +1,29 @@
+Installation
+------------
+
+# Check out the sources
+svn checkout http://svn.freetz.org/trunk
+git clone git://github.com/svoop/freetz-netatalk.git netatalk
+
+# Link in the make files
+ln -s ../../../netatalk/make/libs/db.mk trunk/make/libs/
+ln -s ../../netatalk/make/netatalk trunk/make/
+
+# Patch the config files
+cat netatalk/etc/db.config >>trunk/make/libs/Config.in
+sed -i 's%ncftp/Config.in%ncftp/Config.in\nsource make/netatalk/Config.in%' trunk/make/Config.in
+
+# Build
+cd trunk
+make menuconfig
+make
+
+
+Packages
+--------
+
+FREETZ_PACKAGE_NETATALK
+  Package selection -> Testing -> Netatalk
+
+FREETZ_LIB_libdb
+  Advanced options -> Shared libraries -> db
