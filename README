@@ -1,10 +1,8 @@
 Netatalk
 ========
 
-If you don't speak German but want to work on this project, please let me know by adding
-a comment to:
-
-tba
+If you don't speak German but would like to work on this project, please let me know by 
+adding a comment to: http://www.ip-phone-forum.de/showthread.php?p=1483609
 
 
 Stand der Dinge
@@ -24,6 +22,14 @@ Danach kompiliert Netatalk bis zu folgendem Fehler:
 ad_open.c:715: error: expected ';', ',' or ')' before '_U_'
 
 Die CGI fürs Freetz Backend, Init Scripts etc fehlen noch.
+
+
+Leute
+-----
+
+Im Moment schraube nur ich (Sven) an diesen Paketen. Um mit mir Kontakt aufzuznehmen, schreibe eine
+Reply auf http://www.ip-phone-forum.de/showthread.php?p=1483609, schicke mir auf Github eine Message
+an "svoop" oder suche mich auf IRC http://trac.freetz.org/wiki/help/irc (nick: "svoop").
 
 
 Installation
@@ -58,7 +64,8 @@ FREETZ_LIB_libdb
 
 Links
 -----
-* Forum: tba
+* Forum: http://www.ip-phone-forum.de/showthread.php?p=1483609
+* IRC: http://trac.freetz.org/wiki/help/irc
 * Berkeley DB: http://www.oracle.com/technology/software/products/berkeley-db/db
 * Netatalk: http://netatalk.sourceforge.net
 * Github: http://help.github.com/forking
