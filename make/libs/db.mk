@@ -30,8 +30,7 @@ $($(PKG)_STAGING_BINARY): $($(PKG)_BINARY)
 		install
 
 $($(PKG)_TARGET_BINARY): $($(PKG)_STAGING_BINARY)
-#	$(INSTALL_LIBRARY_STRIP)	# TODO: stripping doesn't work
-	$(INSTALL_LIBRARY)
+	$(INSTALL_LIBRARY_STRIP)
 
 $(pkg): $($(PKG)_STAGING_BINARY)
 
