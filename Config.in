@@ -1,6 +1,8 @@
 config FREETZ_PACKAGE_NETATALK
 	bool "Netatalk 2.1"
 	select FREETZ_LIB_db
+	select FREETZ_LIB_libcrypto
+	select FREETZ_LIB_libssl
 	default n
 	help
 		Netatalk is a kernel level implementation of the AppleTalk 
