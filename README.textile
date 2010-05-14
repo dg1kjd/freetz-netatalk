@@ -5,15 +5,13 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-Netatalk produziert einen Fehler (@checking Berkeley DB library (-ldb47)... configure: error: cannot run test program while cross compiling@). Um den zu lösen, muss man - als Workaround - nach dem ersten, fehlerhaften Lauf den Patch @patches-OFF/100-configure.patch@ anwenden:
+Netatalk kompiliert bis zu folgendem Fehler:
 
 pre. 
-cd source/netatalk-2.1 && patch <../../make/netatalk/patches-OFF/100-configure.patch
-
-Danach kompiliert Netatalk bis zu folgendem Fehler:
-
-pre. 
-ad_open.c:715: error: expected ';', ',' or ')' before '_U_'
+/home/user/freetz/devel/toolchain/target/bin/mipsel-linux-uclibc-gcc -std=gnu99 -D_PATH_CNID_DBD=\"/usr/sbin/cnid_dbd\" -I../../include "-D_U_=__attribute__((unused))" -Os -pipe -march=4kc -Wa,--trap -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -I../../sys -o dbd cmd_dbd.o cmd_dbd_scanvol.o dbif.o pack.o dbd_delete.o dbd_update.o dbd_add.o dbd_lookup.o dbd_rebuild_add.o dbd_getstamp.o  ../../libatalk/.libs/libatalk.a -L/home/sschwyn/freetz/devel/source/target-mipsel_uClibc-0.9.29/netatalk-2.1/libatalk -ldb-4.7  
+/home/user/freetz/devel/toolchain/target/bin/mipsel-linux-uclibc-gcc -std=gnu99 -D_PATH_CNID_DBD=\"/usr/sbin/cnid_dbd\" -I../../include "-D_U_=__attribute__((unused))" -Os -pipe -march=4kc -Wa,--trap -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -I../../sys -o cnid_dbd dbif.o pack.o comm.o db_param.o main.o dbd_add.o dbd_get.o dbd_resolve.o dbd_lookup.o dbd_update.o dbd_delete.o dbd_getstamp.o dbd_rebuild_add.o dbd_dbcheck.o  ../../libatalk/.libs/libatalk.a -L/home/sschwyn/freetz/devel/source/target-mipsel_uClibc-0.9.29/netatalk-2.1/libatalk -ldb-4.7  
+/home/user/freetz/devel/toolchain/build/gcc-4.2.4-uClibc-0.9.29/mipsel-linux-uclibc/bin-ccache/../lib/gcc/mipsel-linux-uclibc/4.2.4/../../../../mipsel-linux-uclibc/bin/ld: cannot find -ldb-4.7
+collect2: ld returned 1 exit status
 
 Die CGI fürs Freetz Backend, Init Scripts etc fehlen noch.
 

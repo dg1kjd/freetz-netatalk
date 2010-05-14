@@ -25,10 +25,8 @@ $(PKG_UNPACKED)
 $(PKG_CONFIGURED_CONFIGURE)
 
 $($(PKG)_BINARY): $($(PKG)_DIR)/.configured
-	PATH="$(TARGET_PATH)" \
-		$(MAKE) -C $(NETATALK_DIR) \
-		CC="$(TARGET_CC)" \
-		CFLAGS="$(TARGET_CFLAGS) -I$(PWD)/$(NETATALK_DIR)/include -I$(PWD)/$(NETATALK_DIR)/sys"
+	$(SUBMAKE) -C $(NETATALK_DIR) \
+		$(NETATALK_MAKE_OPTIONS) CPPFLAGS="$(NETATALK_CPPFLAGS)"
 
 $($(PKG)_TARGET_BINARY): $($(PKG)_BINARY)
 	$(INSTALL_BINARY_STRIP)
@@ -38,8 +36,8 @@ $(pkg):
 $(pkg)-precompiled: $($(PKG)_TARGET_BINARY)
 
 $(pkg)-clean:
-	-$(MAKE) -C $(NETATALK_DIR) clean
-	$(RM) $(NETATALK_DIR)/.configured
+	-$(SUBMAKE) -C $(NETATALK_DIR) clean
+	$(RM) $(NETATALK_FREETZ_CONFIG_FILE)
 
 $(pkg)-uninstall:
 	$(RM) $(NETATALK_TARGET_BINARY)
