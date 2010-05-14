@@ -3,7 +3,7 @@ $(PKG)_SOURCE:=$(pkg)-$($(PKG)_VERSION).tar.gz
 $(PKG)_SITE:=@SF/netatalk
 $(PKG)_BINARY:=$($(PKG)_DIR)/afpd
 $(PKG)_TARGET_BINARY:=$($(PKG)_DEST_DIR)/sbin/afpd
-$(PKG)_SOURCE_MD5:=f35cd7a4ce26c780de380cd2bcae5ce6
+$(PKG)_SOURCE_MD5:=27d4b8dca55801fe7d194bf6b34852f4
 
 $(PKG)_CONFIGURE_OPTIONS +=--disable-afs
 $(PKG)_CONFIGURE_OPTIONS +=--enable-hfs
