@@ -1,6 +1,6 @@
-diff -burN source/netatalk-2.0.5/configure source/netatalk-2.0.5/configure
---- source/netatalk-2.0.5/configure	2009-10-05 11:27:29.000000000 +0300
-+++ source/netatalk-2.0.5/configure	2010-01-31 22:03:19.000000000 +0200
+diff -burN source/netatalk-2.1/configure source/netatalk-2.1/configure
+--- source/netatalk-2.1/configure	2009-10-05 11:27:29.000000000 +0300
++++ source/netatalk-2.1/configure	2010-01-31 22:03:19.000000000 +0200
 @@ -26504,10 +26504,7 @@
  if test $ac_cv_lib_afsauthent_pioctl = yes; then
    netatalk_cv_afs=yes

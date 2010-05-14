@@ -1,4 +1,4 @@
-$(call PKG_INIT_BIN, 2.0.5)
+$(call PKG_INIT_BIN, 2.1)
 $(PKG)_SOURCE:=$(pkg)-$($(PKG)_VERSION).tar.gz
 $(PKG)_SITE:=@SF/netatalk
 $(PKG)_BINARY:=$($(PKG)_DIR)/afpd

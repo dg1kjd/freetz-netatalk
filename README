@@ -12,7 +12,7 @@ Netatalk produziert einen Fehler (checking Berkeley DB library (-ldb47)... confi
 cannot run test program while cross compiling). Um den zu lösen, muss man - als Workaround - 
 nach dem ersten, fehlerhaften Lauf den Patch patches-OFF/100-configure.patch anwenden:
 
-cd source/netatalk-2.0.5 && patch <../../make/netatalk/patches-OFF/100-configure.patch
+cd source/netatalk-2.1 && patch <../../make/netatalk/patches-OFF/100-configure.patch
 
 Danach kompiliert Netatalk bis zu folgendem Fehler:
 
