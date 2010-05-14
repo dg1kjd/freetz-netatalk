@@ -14,8 +14,12 @@ $(PKG)_CONFIGURE_OPTIONS +=--disable-a2boot
 $(PKG)_CONFIGURE_OPTIONS +=--disable-cups
 $(PKG)_CONFIGURE_OPTIONS +=--disable-tcp-wrappers
 $(PKG)_CONFIGURE_OPTIONS +=--with-cnid-default-backend=dbd
+# $(PKG)_CONFIGURE_OPTIONS +=--with-bdb="$(STAGING_DIR)/usr/"
+# $(PKG)_CONFIGURE_OPTIONS +=--with-libgcrypt-dir="$(STAGING_DIR)/usr"
+# $(PKG)_CONFIGURE_OPTIONS +=--with-ssl-dir="$(STAGING_DIR)/usr"
 # $(PKG)_CONFIGURE_OPTIONS +=--with-uams-path="/usr/lib/uams"
 $(PKG)_CONFIGURE_OPTIONS +=--disable-admin-group
+$(PKG)_CONFIGURE_OPTIONS +=--disable-srvloc
 
 $(PKG_SOURCE_DOWNLOAD)
 $(PKG_UNPACKED)

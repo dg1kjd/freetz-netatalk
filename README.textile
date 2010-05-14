@@ -53,4 +53,4 @@ h2. Links
 * "IRC":http://trac.freetz.org/wiki/help/irc
 * "Netatalk":http://netatalk.sourceforge.net
 * "Github":http://help.github.com/forking
-* "Netatalk auf OpenWRT":https://dev.openwrt.org/attachment/ticket/6619/netatalk.diff
+* "Netatalk auf OpenWRT":https://dev.openwrt.org/browser/packages/net/netatalk
