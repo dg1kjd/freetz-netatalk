@@ -26,7 +26,7 @@ Im Moment schraube nur ich (Sven) an diesen Paketen. Um mit mir Kontakt aufzuzne
 h2. Installation
 
 Zuerst sollte das Git Repo geforked werden:
-http://github.com/svoop/freetz-netatalk
+"http://github.com/svoop/freetz-netatalk":http://github.com/svoop/freetz-netatalk
 
 Danach die Entwicklungsumgebung erzeugen. Anstelle von {USERNAME} sollte der eigene Github-Username eingesetzt werden:
 
