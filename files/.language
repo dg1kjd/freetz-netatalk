@@ -4,8 +4,7 @@ default
 { en }
 files
 {
-	etc/default.samba/shares.def
-	etc/default.samba/sharesx.def
-	etc/init.d/rc.samba
-	usr/lib/cgi-bin/samba.cgi
+	etc/default.netatalk/afpd_conf.def
+	etc/init.d/rc.netatalk
+	usr/lib/cgi-bin/netatalk.cgi
 }
