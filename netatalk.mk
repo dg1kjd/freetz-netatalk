@@ -1,9 +1,14 @@
 $(call PKG_INIT_BIN, 2.1)
-$(PKG)_SOURCE:=$(pkg)-$($(PKG)_VERSION).tar.gz
-$(PKG)_SITE:=@SF/netatalk
-$(PKG)_BINARY:=$($(PKG)_DIR)/etc/afpd/afpd
-$(PKG)_TARGET_BINARY:=$($(PKG)_DEST_DIR)/sbin/afpd
-$(PKG)_SOURCE_MD5:=27d4b8dca55801fe7d194bf6b34852f4
+$(PKG)_SOURCE := $(pkg)-$($(PKG)_VERSION).tar.gz
+$(PKG)_SOURCE_MD5 := 27d4b8dca55801fe7d194bf6b34852f4
+$(PKG)_SITE := @SF/netatalk
+
+$(PKG)_LIBNAMES := uams_guest uams_dhx_passwd
+$(PKG)_LIBS_BUILD_DIR := $(NETATALK_LIBNAMES:%=$($(PKG)_DIR)/etc/uams/.libs/%.so)
+$(PKG)_LIBS_TARGET_DIR := $(NETATALK_LIBNAMES:%=$($(PKG)_DEST_LIBDIR)/%.so)
+
+$(PKG)_BINARY := $($(PKG)_DIR)/etc/afpd/afpd
+$(PKG)_TARGET_BINARY := $($(PKG)_DEST_DIR)/sbin/afpd
 
 $(PKG)_DEPENDS_ON := db libgcrypt openssl
 
@@ -27,23 +32,26 @@ $(PKG_SOURCE_DOWNLOAD)
 $(PKG_UNPACKED)
 $(PKG_CONFIGURED_CONFIGURE)
 
-$($(PKG)_BINARY): $($(PKG)_DIR)/.configured
+$($(PKG)_BINARY) $($(PKG)_LIBS_BUILD_DIR): $($(PKG)_DIR)/.configured
 	$(SUBMAKE) -C $(NETATALK_DIR) \
 		CPPFLAGS="-I$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/include $(NETATALK_CPPFLAGS)" \
 		LDFLAGS="-L$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/lib"
+
+$($(PKG)_LIBS_TARGET_DIR): $($(PKG)_DEST_LIBDIR)/%: $($(PKG)_DIR)/etc/uams/.libs/%
+	$(INSTALL_LIBRARY_STRIP)
 
 $($(PKG)_TARGET_BINARY): $($(PKG)_BINARY)
 	$(INSTALL_BINARY_STRIP)
 
 $(pkg):
 
-$(pkg)-precompiled: $($(PKG)_TARGET_BINARY)
+$(pkg)-precompiled: $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_TARGET_BINARY)
 
 $(pkg)-clean:
 	-$(SUBMAKE) -C $(NETATALK_DIR) clean
 	$(RM) $(NETATALK_FREETZ_CONFIG_FILE)
 
 $(pkg)-uninstall:
-	$(RM) $(NETATALK_TARGET_BINARY)
+	$(RM) $($(PKG)_LIBS_TARGET_DIR) $(NETATALK_TARGET_BINARY)
 
 $(PKG_FINISH)
