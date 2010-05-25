@@ -4,26 +4,21 @@ BDIR=/sbin
 # define DAEMON for compatibility reason (modlibrc)
 DAEMON=netatalk
 AFPD=afpd
-MODPATH=/mod/etc
-CONF=$MODPATH/afpd.conf
+CNID_METAD=cnid_metad
+MODPATH=/mod/etc/netatalk
+CONF_AFPD=$MODPATH/afpd.conf
+CONF_APPLEVOLUMES=$MODPATH/AppleVolumes.default
 
 . /etc/init.d/modlibrc
 
 config() {
-
-		mkdir -p /var/locks
-		mkdir -p /var/netatalk/lib
-		mkdir -p /var/netatalk/private
+    mkdir -p $MODPATH
+		mkdir -p /var/lock
 
 		modlib_adduser ftpuser -G users -D -S -h "/var/media/ftp" -g "ftp user"
 		
-		/mod/etc/default.netatalk/netatalk_conf $2 > $CONF
-
-#		if [ -r /var/tmp/smbpasswd.cleartext ]; then
-#			smbpasswd 2>/dev/null
-#			rm /var/tmp/smbpasswd.cleartext
-#		fi
-
+		/mod/etc/default.netatalk/afpd_conf $2 > $CONF_AFPD
+		/mod/etc/default.netatalk/applevolumes_conf $2 > $CONF_APPLEVOLUMES
 }
 
 start() {
@@ -31,18 +26,32 @@ start() {
 
 	config
 	
-	if pidof afpd > /dev/null; then
-		echo "already running"
-		exit 0
+	exitvals=0
+
+	if pidof $CNID_METAD > /dev/null; then
+	  echo "cnid_metad already running"
+	else
+	  $CNID_METAD > /dev/null 2>&1
+	  if [ $? -eq 0 ]; then
+      pidof $CNID_METAD >"/var/run/$CNID_METAD.pid"
+    else
+      exitvals=$((exitvals + $?))
+    fi
+	fi
+	
+	if pidof $AFPD > /dev/null; then
+		echo "afpd already running"
+	else
+	  $AFPD -F /tmp/flash/netatalk/afpd.conf -f /tmp/flash/netatalk/AppleVolumes.default -P "/var/run/$AFPD.pid" -c $NETATALK_MAX_CLIENTS -n "$NETATALK_NAME$NETATALK_ZONE" > /dev/null 2>&1
+    exitvals=$((exitvals + $?))
 	fi
 
-	$AFPD -D -s $CONF > /dev/null 2>&1
-
-	if [ $? -eq 0 ]; then
+	if [ $exitvals -eq 0 ]; then
 		echo "done."
 		exit 0
 	else
-		killall $AFPD >/dev/null 2>&1
+  	killall -TERM $AFPD > /dev/null 2>&1
+  	killall -TERM $CNID_METAD > /dev/null 2>&1
 		echo "failed."
 		exit 1
 	fi
@@ -50,9 +59,16 @@ start() {
 
 stop () {
 	echo -n "Stopping netatalk..."
-	killall -TERM $AFPD > /dev/null 2>&1
 
-	if [ $? -eq 0 ]; then
+	exitvals=0
+
+	killall -TERM $AFPD > /dev/null 2>&1
+  exitvals=$((exitvals + $?))
+
+	killall -TERM $CNID_METAD > /dev/null 2>&1
+  exitvals=$((exitvals + $?))
+
+	if [ $exitvals -eq 0 ]; then
 		echo "done."
 	else
 		echo "failed."
@@ -65,21 +81,19 @@ case $1 in
 		;;
 	""|load)
 		[ -d /tmp/flash/netatalk ] || mkdir /tmp/flash/netatalk
-
 		modreg cgi netatalk "Netatalk"
-
-		modreg file netatalk afpd_conf 'Netatalk: afpd.conf' 1 "afpd_conf"
-
+		modreg file afpd_conf afpd.conf 'Netatalk: afpd.conf' 1 "afpd_conf"
+		modreg file applevolumes_conf AppleVolumes.default 'Netatalk: AppleVolumes.default' 1 "applevolumes_conf"
 		if [ "$NETATALK_ENABLED" != yes ]; then
 			echo "netatalk is disabled" 1>&2
 			exit 1
 		fi
-
 		start
 		;;
 	unload)
 		stop
-		modunreg file netatalk
+		modunreg file applevolumes_conf
+		modunreg file afpd_conf
 		modunreg cgi netatalk
 		;;
 	start)
@@ -106,10 +120,23 @@ case $1 in
 			done
 		fi
 		if [ -z "$PID_AFPD" ]; then
-			killall $AFPD >/dev/null 2>&1
-			echo "stopped"
+			killall -TERM $AFPD >/dev/null 2>&1
+			echo "afpd stopped"
 		else
-			echo "running"
+			echo "afpd running"
+		fi
+		if [ -r /var/run/$CNID_METAD.pid ]; then
+			for PIDS in $(pidof "$CNID_METAD"); do
+				if [ $PIDS == "$(cat /var/run/$CNID_METAD.pid)" ]; then
+					PID_CNID_METAD=$PIDS
+				fi
+			done
+		fi
+		if [ -z "$PID_CNID_METAD" ]; then
+			killall -TERM $CNID_METAD >/dev/null 2>&1
+			echo "cnid_metad stopped"
+		else
+			echo "cnid_metad running"
 		fi
 		;;
 	*)

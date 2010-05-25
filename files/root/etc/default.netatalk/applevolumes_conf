@@ -1,0 +1,7 @@
+#!/bin/sh
+
+CFGCTL=$(which usbcfgctl)
+[ -z "$CFGCTL" ] && CFGCTL=ar7cfgctl
+
+cat /tmp/flash/netatalk/AppleVolumes.default
+

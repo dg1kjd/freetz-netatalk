@@ -1,0 +1,9 @@
+CAPTION='Netatalk: afpd.conf'
+DESCRIPTION='<a href="http://netatalk.sourceforge.net/2.1/htmldocs/afpd.conf.5.html" target="_blank">$(lang de:"Syntax siehe Dokumentation" en:"Syntax see documentation")</a><br>
+($(lang de:"Beispiel" en:"Example"): - -noddp'
+
+CONFIG_FILE='/tmp/flash/netatalk/afpd.conf'
+CONFIG_SAVE='modsave flash; if pidof afpd > /dev/null; then echo ""; /mod/etc/init.d/rc.netatalk restart; fi'
+CONFIG_TYPE='text'
+
+TEXT_ROWS=10

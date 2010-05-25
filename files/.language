@@ -4,7 +4,8 @@ default
 { en }
 files
 {
-	etc/default.netatalk/afpd_conf.def
+	etc/default.netatalk/afpd.conf.def
+	etc/default.netatalk/AppleVolumes.default.def
 	etc/init.d/rc.netatalk
 	usr/lib/cgi-bin/netatalk.cgi
 }
