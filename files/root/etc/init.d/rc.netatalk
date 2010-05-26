@@ -42,7 +42,7 @@ start() {
 	if pidof $AFPD > /dev/null; then
 		echo "afpd already running"
 	else
-	  $AFPD -F /tmp/flash/netatalk/afpd.conf -f /tmp/flash/netatalk/AppleVolumes.default -P "/var/run/$AFPD.pid" -c $NETATALK_MAX_CLIENTS -n "$NETATALK_NAME$NETATALK_ZONE" > /dev/null 2>&1
+	  $AFPD -F $CONF_AFPD -f $CONF_APPLEVOLUMES -P /var/run/$AFPD.pid -c $NETATALK_MAX_CLIENTS -n "$NETATALK_NAME$NETATALK_ZONE" > /dev/null 2>&1
     exitvals=$((exitvals + $?))
 	fi
 
