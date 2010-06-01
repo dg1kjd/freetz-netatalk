@@ -19,8 +19,8 @@ sec_begin '$(lang de:"Einstellungen" en:"Settings")'
 
 cat << EOF
 <ul>
-<li><a href="$(href file netatalk afpd.conf)">afpd.conf</a></li>
-<li><a href="$(href file netatalk AppleVolumes.default)">AppleVolumes.default</a></li>
+<li><a href="$(href file netatalk afpd_conf)">afpd.conf</a></li>
+<li><a href="$(href file netatalk applevolumes_default)">AppleVolumes.default</a></li>
 </ul>
 EOF
 

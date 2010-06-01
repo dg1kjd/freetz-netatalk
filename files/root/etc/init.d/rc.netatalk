@@ -82,8 +82,8 @@ case $1 in
 	""|load)
 		[ -d /tmp/flash/netatalk ] || mkdir /tmp/flash/netatalk
 		modreg cgi netatalk "Netatalk"
-		modreg file afpd_conf afpd.conf 'Netatalk: afpd.conf' 1 "afpd_conf"
-		modreg file applevolumes_conf AppleVolumes.default 'Netatalk: AppleVolumes.default' 1 "applevolumes_conf"
+		modreg file afpd_conf afpd_conf 'Netatalk: afpd.conf' 1 "afpd_conf"
+		modreg file applevolumes_conf applevolumes_default 'Netatalk: AppleVolumes.default' 1 "applevolumes_conf"
 		if [ "$NETATALK_ENABLED" != yes ]; then
 			echo "netatalk is disabled" 1>&2
 			exit 1
