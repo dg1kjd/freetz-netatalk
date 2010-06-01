@@ -119,12 +119,6 @@ case $1 in
 				fi
 			done
 		fi
-		if [ -z "$PID_AFPD" ]; then
-			killall -TERM $AFPD >/dev/null 2>&1
-			echo "afpd stopped"
-		else
-			echo "afpd running"
-		fi
 		if [ -r /var/run/$CNID_METAD.pid ]; then
 			for PIDS in $(pidof "$CNID_METAD"); do
 				if [ $PIDS == "$(cat /var/run/$CNID_METAD.pid)" ]; then
@@ -132,11 +126,12 @@ case $1 in
 				fi
 			done
 		fi
-		if [ -z "$PID_CNID_METAD" ]; then
+		if [ -z "$PID_AFPD" -o -z "$PID_CNID_METAD" ]; then
+			killall -TERM $AFPD >/dev/null 2>&1
 			killall -TERM $CNID_METAD >/dev/null 2>&1
-			echo "cnid_metad stopped"
+			echo "stopped"
 		else
-			echo "cnid_metad running"
+			echo "running"
 		fi
 		;;
 	*)
