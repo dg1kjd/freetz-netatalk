@@ -28,11 +28,13 @@ Zuerst sollte das Git Repo geforked werden:
 Danach die Entwicklungsumgebung erzeugen. Anstelle von {USERNAME} sollte der eigene Github-Username eingesetzt werden:
 
 pre. 
-svn checkout http://svn.freetz.org/trunk devel
+mkdir freetz
+cd freetz
+svn checkout http://svn.freetz.org/trunk
 git clone git@github.com:{USERNAME}/freetz-netatalk.git netatalk
-ln -s ../../netatalk devel/make/
-sed -i 's%ncftp/Config.in%ncftp/Config.in\nsource make/netatalk/Config.in%' devel/make/Config.in
-cd devel
+ln -s ../../netatalk trunk/make/
+sed -i 's%ncftp/Config.in%ncftp/Config.in\nsource make/netatalk/Config.in%' trunk/make/Config.in
+cd trunk
 make menuconfig
 
 
