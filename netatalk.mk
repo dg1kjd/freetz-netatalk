@@ -7,15 +7,20 @@ $(PKG)_LIBS := uams_guest uams_dhx_passwd
 $(PKG)_LIBS_BUILD_DIR := $(NETATALK_LIBS:%=$($(PKG)_DIR)/etc/uams/.libs/%.so)
 $(PKG)_LIBS_TARGET_DIR := $(NETATALK_LIBS:%=$($(PKG)_DEST_LIBDIR)/%.so)
 
-$(PKG)_AFPD_BINS := hash 
-$(PKG)_CNID_BINS := dbd
-$(PKG)_BINS_BUILD_DIR := $(NETATALK_AFPD_BINS:%=$($(PKG)_DIR)/etc/afpd/%) $(NETATALK_CNID_BINS:%=$($(PKG)_DIR)/etc/cnid_dbd/%)
-$(PKG)_BINS_TARGET_DIR := $(NETATALK_AFPD_BINS:%=$($(PKG)_DEST_DIR)/usr/bin/%) $(NETATALK_CNID_BINS:%=$($(PKG)_DEST_DIR)/usr/bin/%)
+$(PKG)_HASH_BUILD_DIR := $($(PKG)_DIR)/etc/afpd/hash
+$(PKG)_HASH_TARGET_DIR := $($(PKG)_DEST_DIR)/usr/bin/hash
 
-$(PKG)_AFPD_SBINS := afpd 
-$(PKG)_CNID_SBINS := cnid_metad cnid_dbd
-$(PKG)_SBINS_BUILD_DIR := $(NETATALK_AFPD_SBINS:%=$($(PKG)_DIR)/etc/afpd/%) $(NETATALK_CNID_SBINS:%=$($(PKG)_DIR)/etc/cnid_dbd/%)
-$(PKG)_SBINS_TARGET_DIR := $(NETATALK_AFPD_SBINS:%=$($(PKG)_DEST_DIR)/sbin/%) $(NETATALK_CNID_SBINS:%=$($(PKG)_DEST_DIR)/sbin/%)
+$(PKG)_DBD_BUILD_DIR := $($(PKG)_DIR)/etc/cnid_dbd/dbd
+$(PKG)_DBD_TARGET_DIR := $($(PKG)_DEST_DIR)/usr/bin/dbd
+
+$(PKG)_AFPD_BUILD_DIR := $($(PKG)_DIR)/etc/afpd/afpd
+$(PKG)_AFPD_TARGET_DIR := $($(PKG)_DEST_DIR)/sbin/afpd
+
+$(PKG)_CNID_METAD_BUILD_DIR := $($(PKG)_DIR)/etc/cnid_dbd/cnid_metad
+$(PKG)_CNID_METAD_TARGET_DIR := $($(PKG)_DEST_DIR)/sbin/cnid_metad
+
+$(PKG)_CNID_DBD_BUILD_DIR := $($(PKG)_DIR)/etc/cnid_dbd/cnid_dbd
+$(PKG)_CNID_DBD_TARGET_DIR := $($(PKG)_DEST_DIR)/sbin/cnid_dbd
 
 $(PKG)_DEPENDS_ON := db libgcrypt openssl
 
@@ -35,12 +40,13 @@ $(PKG)_CONFIGURE_OPTIONS +=--with-includedir="$(TARGET_TOOLCHAIN_STAGING_DIR)/us
 $(PKG)_CONFIGURE_OPTIONS +=--with-libdir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/lib"
 $(PKG)_CONFIGURE_OPTIONS +=--with-ssl-dir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
 $(PKG)_CONFIGURE_OPTIONS +=--with-uams-path="/usr/lib/freetz"
+$(PKG)_CONFIGURE_OPTIONS +=--sysconfdir="/mod/etc"
 
 $(PKG_SOURCE_DOWNLOAD)
 $(PKG_UNPACKED)
 $(PKG_CONFIGURED_CONFIGURE)
 
-$($(PKG)_LIBS_BUILD_DIR) $($(PKG)_BINS_BUILD_DIR) $($(PKG)_SBINS_BUILD_DIR): $($(PKG)_DIR)/.configured
+$($(PKG)_LIBS_BUILD_DIR) $($(PKG)_BIN_BUILD_DIR) $($(PKG)_SBIN_BUILD_DIR): $($(PKG)_DIR)/.configured
 	$(SUBMAKE) -C $(NETATALK_DIR) \
 		CPPFLAGS="-I$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/include $(NETATALK_CPPFLAGS)" \
 		LDFLAGS="-L$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/lib"
@@ -48,21 +54,30 @@ $($(PKG)_LIBS_BUILD_DIR) $($(PKG)_BINS_BUILD_DIR) $($(PKG)_SBINS_BUILD_DIR): $($
 $($(PKG)_LIBS_TARGET_DIR): $($(PKG)_DEST_LIBDIR)/%: $($(PKG)_DIR)/etc/uams/.libs/%
 	$(INSTALL_LIBRARY_STRIP)
 
-$($(PKG)_BINS_TARGET_DIR): $($(PKG)_DEST_DIR)/usr/bin/%: $($(PKG)_BINS_BUILD_DIR)
+$($(PKG)_HASH_TARGET_DIR): $($(PKG)_HASH_BUILD_DIR)
 	$(INSTALL_BINARY_STRIP)
 
-$($(PKG)_SBINS_TARGET_DIR): $($(PKG)_DEST_DIR)/sbin/%: $($(PKG)_SBINS_BUILD_DIR)
+$($(PKG)_DBD_TARGET_DIR): $($(PKG)_DBD_BUILD_DIR)
+	$(INSTALL_BINARY_STRIP)
+
+$($(PKG)_AFPD_TARGET_DIR): $($(PKG)_AFPD_BUILD_DIR)
+	$(INSTALL_BINARY_STRIP)
+
+$($(PKG)_CNID_METAD_TARGET_DIR): $($(PKG)_CNID_METAD_BUILD_DIR)
+	$(INSTALL_BINARY_STRIP)
+
+$($(PKG)_CNID_DBD_TARGET_DIR): $($(PKG)_CNID_DBD_BUILD_DIR)
 	$(INSTALL_BINARY_STRIP)
 
 $(pkg):
 
-$(pkg)-precompiled: $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_BINS_TARGET_DIR) $($(PKG)_SBINS_TARGET_DIR)
+$(pkg)-precompiled: $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_HASH_TARGET_DIR) $($(PKG)_DBD_TARGET_DIR) $($(PKG)_AFPD_TARGET_DIR) $($(PKG)_CNID_METAD_TARGET_DIR) $($(PKG)_CNID_DBD_TARGET_DIR)
 
 $(pkg)-clean:
 	-$(SUBMAKE) -C $(NETATALK_DIR) clean
 	$(RM) $(NETATALK_FREETZ_CONFIG_FILE)
 
 $(pkg)-uninstall:
-	$(RM) $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_BINS_TARGET_DIR) $($(PKG)_SBINS_TARGET_DIR)
+	$(RM) $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_HASH_TARGET_DIR) $($(PKG)_DBD_TARGET_DIR) $($(PKG)_AFPD_TARGET_DIR) $($(PKG)_CNID_METAD_TARGET_DIR) $($(PKG)_CNID_DBD_TARGET_DIR)
 
 $(PKG_FINISH)
