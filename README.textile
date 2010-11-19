@@ -17,7 +17,7 @@ Die CGI fürs Freetz Backend, Init Scripts etc fehlen noch.
 
 h2. Leute
 
-Im Moment schraube nur ich (Sven) an diesen Paketen. Um mit mir Kontakt aufzuznehmen, schreibe eine Reply "ins Forum":http://www.ip-phone-forum.de/showthread.php?p=1483609, schicke mir auf Github eine Message an "svoop" oder suche mich auf "IRC":http://trac.freetz.org/wiki/help/irc (nick: "svoop").
+Im Moment schrauben nur ich (Sven) und dg1kjd (Jens) an diesen Paketen. Um mit mir Kontakt aufzuznehmen, schreibe eine Reply "ins Forum":http://www.ip-phone-forum.de/showthread.php?p=1483609, schicke mir auf Github eine Message an "svoop" oder suche mich auf "IRC":http://trac.freetz.org/wiki/help/irc (nick: "svoop").
 
 
 h2. Installation
