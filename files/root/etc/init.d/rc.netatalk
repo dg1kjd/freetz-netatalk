@@ -1,144 +1,73 @@
 #!/bin/sh
 
-BDIR=/sbin
-# define DAEMON for compatibility reason (modlibrc)
 DAEMON=netatalk
-AFPD=afpd
-CNID_METAD=cnid_metad
-MODPATH=/mod/etc/netatalk
-CONF_AFPD=$MODPATH/afpd.conf
-CONF_APPLEVOLUMES=$MODPATH/AppleVolumes.default
-
+DAEMON_LONG_NAME=Netatalk
 . /etc/init.d/modlibrc
 
+do_afpd() {
+  /etc/init.d/rc.afpd $1
+}
+
+do_cnid_metad() {
+  /etc/init.d/rc.cnid_metad $1
+}
+
 config() {
-    mkdir -p $MODPATH
-		mkdir -p /var/lock
-
-		modlib_adduser ftpuser -G users -D -S -h "/var/media/ftp" -g "ftp user"
-		
-		/mod/etc/default.netatalk/afpd_conf $2 > $CONF_AFPD
-		/mod/etc/default.netatalk/applevolumes_conf $2 > $CONF_APPLEVOLUMES
-}
-
-start() {
-	echo -n "Starting netatalk..."
-
-	config
-	
-	exitvals=0
-
-	if pidof $CNID_METAD > /dev/null; then
-	  echo "cnid_metad already running"
-	else
-	  $CNID_METAD > /dev/null 2>&1
-	  if [ $? -eq 0 ]; then
-      pidof $CNID_METAD >"/var/run/$CNID_METAD.pid"
-    else
-      exitvals=$((exitvals + $?))
-    fi
-	fi
-	
-	if pidof $AFPD > /dev/null; then
-		echo "afpd already running"
-	else
-	  $AFPD -F $CONF_AFPD -f $CONF_APPLEVOLUMES -P /var/run/$AFPD.pid -c $NETATALK_MAX_CLIENTS -n "$NETATALK_NAME$NETATALK_ZONE" > /dev/null 2>&1
-    exitvals=$((exitvals + $?))
-	fi
-
-	if [ $exitvals -eq 0 ]; then
-		echo "done."
-		exit 0
-	else
-  	killall -TERM $AFPD > /dev/null 2>&1
-  	killall -TERM $CNID_METAD > /dev/null 2>&1
-		echo "failed."
-		exit 1
-	fi
-}
-
-stop () {
-	echo -n "Stopping netatalk..."
-
-	exitvals=0
-
-	killall -TERM $AFPD > /dev/null 2>&1
-  exitvals=$((exitvals + $?))
-
-	killall -TERM $CNID_METAD > /dev/null 2>&1
-  exitvals=$((exitvals + $?))
-
-	if [ $exitvals -eq 0 ]; then
-		echo "done."
-	else
-		echo "failed."
-	fi
+    mkdir -p /mod/etc/netatalk
+    /mod/etc/default.netatalk/afpd_conf_conf > /mod/etc/netatalk/afpd.conf
+    /mod/etc/default.netatalk/applevolumes_default_conf > /mod/etc/netatalk/AppleVolumes.default
 }
 
 case $1 in
-	config)
-		config $2
-		;;
 	""|load)
 		mkdir -p /tmp/flash/netatalk
+		mkdir -p /var/locks
+
+		modlib_adduser ftpuser -G users -D -S -h "/var/media/ftp" -g "ftp user"
+
 		modreg cgi netatalk "Netatalk"
-		modreg daemon $AFPD
-		modreg dameon $CNID_METAD
-		modreg file netatalk afpd_conf 'Netatalk: afpd.conf' 1 "afpd.conf"
-		modreg file netatalk applevolumes_default 'Netatalk: AppleVolumes.default' 1 "AppleVolumes.default"
-		if [ "$NETATALK_ENABLED" != yes ]; then
-			echo "netatalk is disabled" 1>&2
-			exit 1
-		fi
-		start
+		modreg file netatalk afpd_conf 'afpd.conf' 1 "afpd_conf"
+		modreg file netatalk applevolumes_default 'AppleVolumes.default' 1 "applevolumes_default"
+		modreg daemon --hide netatalk
+
+		do_cnid_metad
+		do_afpd
 		;;
 	unload)
-		stop
+		modunreg daemon $DAEMON
 		modunreg file netatalk
-		modunreg daemon $CNID_METAD
-		modunreg daemon $AFPD
 		modunreg cgi netatalk
+		do_afpd unload
+		do_cnid_metad unload
 		;;
 	start)
-		start
+		do_cnid_metad start
+		do_afpd start
 		;;
 	stop)
-		stop
+		do_afpd stop
+		do_cnid_metad stop
 		;;
 	restart)
-		PARA2=""
-		if [ $# -ge 2 ]; then
-			PARA2=$2
-		fi
-		stop $PARA2
-		sleep 2
-		start $PARA2
+		do_afpd stop
+		do_cnid_metad stop
+		do_cnid_metad start
+		do_afpd start
+		;;
+	reload)
+		do_cnid_metad reload
+		do_afpd reload
 		;;
 	status)
-		if [ -r /var/run/$AFPD.pid ]; then
-			for PIDS in $(pidof "$AFPD"); do
-				if [ $PIDS == "$(cat /var/run/$AFPD.pid)" ]; then
-					PID_AFPD=$PIDS
-				fi
-			done
-		fi
-		if [ -r /var/run/$CNID_METAD.pid ]; then
-			for PIDS in $(pidof "$CNID_METAD"); do
-				if [ $PIDS == "$(cat /var/run/$CNID_METAD.pid)" ]; then
-					PID_CNID_METAD=$PIDS
-				fi
-			done
-		fi
-		if [ -z "$PID_AFPD" -o -z "$PID_CNID_METAD" ]; then
-			killall -TERM $AFPD >/dev/null 2>&1
-			killall -TERM $CNID_METAD >/dev/null 2>&1
-			echo "stopped"
-		else
-			echo "running"
-		fi
+	  do_afpd status
+		;;
+	config)
+		config
 		;;
 	*)
-		echo "Usage: $0 [load|unload|start|stop|restart|status|config]" 1>&2
+		echo "Usage: $0 [load|unload|start|stop|restart|reload|status|config]" 1>&2
 		exit 1
 		;;
 esac
+
+exit 0
