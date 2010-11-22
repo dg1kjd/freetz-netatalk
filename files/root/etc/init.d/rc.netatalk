@@ -28,7 +28,7 @@ case $1 in
 		modreg cgi netatalk "Netatalk"
 		modreg file netatalk afpd_conf 'afpd.conf' 1 "afpd_conf"
 		modreg file netatalk applevolumes_default 'AppleVolumes.default' 1 "applevolumes_default"
-		modreg daemon --hide netatalk
+		modreg daemon netatalk
 
 		do_cnid_metad
 		do_afpd
