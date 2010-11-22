@@ -80,10 +80,12 @@ case $1 in
 		config $2
 		;;
 	""|load)
-		[ -d /tmp/flash/netatalk ] || mkdir /tmp/flash/netatalk
+		mkdir -p /tmp/flash/netatalk
 		modreg cgi netatalk "Netatalk"
-		modreg file afpd_conf afpd_conf 'Netatalk: afpd.conf' 1 "afpd_conf"
-		modreg file applevolumes_conf applevolumes_default 'Netatalk: AppleVolumes.default' 1 "applevolumes_conf"
+		modreg daemon $AFPD
+		modreg dameon $CNID_METAD
+		modreg file netatalk afpd_conf 'Netatalk: afpd.conf' 1 "afpd.conf"
+		modreg file netatalk applevolumes_default 'Netatalk: AppleVolumes.default' 1 "AppleVolumes.default"
 		if [ "$NETATALK_ENABLED" != yes ]; then
 			echo "netatalk is disabled" 1>&2
 			exit 1
@@ -92,8 +94,9 @@ case $1 in
 		;;
 	unload)
 		stop
-		modunreg file applevolumes_conf
-		modunreg file afpd_conf
+		modunreg file netatalk
+		modunreg daemon $CNID_METAD
+		modunreg daemon $AFPD
 		modunreg cgi netatalk
 		;;
 	start)
