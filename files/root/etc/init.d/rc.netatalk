@@ -21,7 +21,7 @@ config() {
 case $1 in
 	""|load)
 		mkdir -p /tmp/flash/netatalk
-		mkdir -p /var/locks
+		mkdir -p /var/run
 
 		modlib_adduser ftpuser -G users -D -S -h "/var/media/ftp" -g "ftp user"
 

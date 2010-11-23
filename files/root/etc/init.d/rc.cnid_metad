@@ -9,7 +9,8 @@ CONF_ENABLED=NETATALK_CNID_METAD_ENABLED
 
 
 start() {
-	modlib_startdaemon $DAEMON_BIN -l LOG_INFO
+	modlib_startdaemon $DAEMON_BIN
+#	  -P /var/run/$DAEMON_BIN.pid
 }
 
 case $1 in
