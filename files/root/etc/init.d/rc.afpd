@@ -8,7 +8,10 @@ DAEMON_CONFIG=/mod/etc/netatalk/afpd.conf
 
 
 start() {
-	modlib_startdaemon $DAEMON_BIN -F $DAEMON_CONFIG -f /mod/etc/netatalk/AppleVolumes.default
+	modlib_startdaemon $DAEMON_BIN \
+	  -F $DAEMON_CONFIG \
+	  -f /mod/etc/netatalk/AppleVolumes.default \
+	  -c $NETATALK_MAX_CLIENTS
 }
 
 case $1 in
