@@ -5,19 +5,17 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-Netatalk kompiliert, allerdings gibt es folgende Warnung:
+Netatalk kompiliert und installiert die Binaries korrekt. CGI und Konfigurationsdateien sind
+gemacht, aber noch nicht völlig getestet. Ausserdem noch dieses hier:
 
-pre. 
-***          Detected libgcryt without CAST5              ***
-*** Please install/build another one and point to it with ***
-***         --with-libgcrypt-dir=<path-to-lib>            ***
-
-Die CGI fürs Freetz Backend, Init Scripts etc fehlen noch.
+pre.
+fritz root # cnid_dbd
+cnid_dbd: can't load library 'libdb-4.8.so'
 
 
 h2. Leute
 
-Im Moment schraube nur ich (Sven) an diesen Paketen. Um mit mir Kontakt aufzuznehmen, schreibe eine Reply "ins Forum":http://www.ip-phone-forum.de/showthread.php?p=1483609, schicke mir auf Github eine Message an "svoop" oder suche mich auf "IRC":http://trac.freetz.org/wiki/help/irc (nick: "svoop").
+Im Moment schrauben nur ich (Sven) und dg1kjd (Jens) an diesen Paketen. Um mit mir Kontakt aufzuznehmen, schreibe eine Reply "ins Forum":http://www.ip-phone-forum.de/showthread.php?p=1483609, schicke mir auf Github eine Message an "svoop" oder suche mich auf "IRC":http://trac.freetz.org/wiki/help/irc (nick: "svoop").
 
 
 h2. Installation
