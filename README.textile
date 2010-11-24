@@ -8,7 +8,7 @@ h2. Stand der Dinge
 Netatalk kompiliert und installiert die Binaries korrekt. CGI und Konfigurationsdateien sind
 gemacht, aber noch nicht völlig getestet. Ausserdem noch dieses hier:
 
-pre.
+pre. 
 fritz root # cnid_dbd
 cnid_dbd: can't load library 'libdb-4.8.so'
 
