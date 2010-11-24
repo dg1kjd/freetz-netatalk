@@ -5,8 +5,12 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-CGI und Konfigurationsdateien sind gemacht, aber noch nicht völlig getestet. Die Binaries haben bis vor
-kurzem noch durchkompiliert, aber uams_dhx2_passwd.so macht im Moment noch Probleme.
+Die Libs und Binaries kompilieren. CGI und Konfigurationsdateien sind gemacht, aber noch nicht völlig 
+getestst. Es geht aber langsam auf die Zielgerade.
+
+Libgcrypt wird von Freetz derzeit noch ohne CAST5 Cipher kompiliert, daher ist ein kleiner manueller
+Eingriff nötig (siehe Installation), ansonsten wird uams_dhx2_passwd.so nicht kompiliert. Eine Anpassung
+ist mit dem "Freetz Trac Ticket #1094":http://trac.freetz.org/ticket/1094 unterwegs.
 
 
 h2. Leute
@@ -28,6 +32,7 @@ svn checkout http://svn.freetz.org/trunk
 git clone git@github.com:{USERNAME}/freetz-netatalk.git netatalk
 ln -s ../../netatalk trunk/make/
 sed -i 's%ncftp/Config.in%ncftp/Config.in\nsource make/netatalk/Config.in%' trunk/make/Config.in
+sed -i 's%arcfour des aes%arcfour des aes cast5%' trunk/make/libs/libgcrypt.mk
 cd trunk
 make menuconfig
 

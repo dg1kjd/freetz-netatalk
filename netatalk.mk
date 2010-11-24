@@ -7,13 +7,17 @@ $(PKG)_LIBS := uams_guest uams_dhx2_passwd
 $(PKG)_LIBS_BUILD_DIR := $($(PKG)_LIBS:%=$($(PKG)_DIR)/etc/uams/.libs/%.so)
 $(PKG)_LIBS_TARGET_DIR := $($(PKG)_LIBS:%=$($(PKG)_DEST_LIBDIR)/%.so)
 
-$(PKG)_BINS_AFPD := afpd afppasswd hash
+$(PKG)_BINS_AFPD := afpd hash
 $(PKG)_BINS_AFPD_BUILD_DIR := $($(PKG)_BINS_AFPD:%=$($(PKG)_DIR)/etc/afpd/%)
 $(PKG)_BINS_AFPD_TARGET_DIR := $($(PKG)_BINS_AFPD:%=$($(PKG)_DEST_DIR)/sbin/%)
 
 $(PKG)_BINS_DBD := cnid_dbd cnid_metad dbd
 $(PKG)_BINS_DBD_BUILD_DIR := $($(PKG)_BINS_DBD:%=$($(PKG)_DIR)/etc/cnid_dbd/%)
 $(PKG)_BINS_DBD_TARGET_DIR := $($(PKG)_BINS_DBD:%=$($(PKG)_DEST_DIR)/sbin/%)
+
+$(PKG)_BINS_AFPPASSWD := afppasswd
+$(PKG)_BINS_AFPPASSWD_BUILD_DIR := $($(PKG)_BINS_AFPPASSWD:%=$($(PKG)_DIR)/bin/afppasswd/%)
+$(PKG)_BINS_AFPPASSWD_TARGET_DIR := $($(PKG)_BINS_AFPPASSWD:%=$($(PKG)_DEST_DIR)/sbin/%)
 
 $(PKG)_DEPENDS_ON := db libgcrypt
 
@@ -39,7 +43,7 @@ $(PKG_SOURCE_DOWNLOAD)
 $(PKG_UNPACKED)
 $(PKG_CONFIGURED_CONFIGURE)
 
-$($(PKG)_LIBS_BUILD_DIR) $($(PKG)_BINS_AFPD_BUILD_DIR) $($(PKG)_BINS_DBD_BUILD_DIR): $($(PKG)_DIR)/.configured
+$($(PKG)_LIBS_BUILD_DIR) $($(PKG)_BINS_AFPD_BUILD_DIR) $($(PKG)_BINS_DBD_BUILD_DIR) $($(PKG)_BINS_AFPPASSWD_BUILD_DIR): $($(PKG)_DIR)/.configured
 	$(SUBMAKE) -C $(NETATALK_DIR) \
 		CPPFLAGS="-I$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/include $(NETATALK_CPPFLAGS)" \
 		LDFLAGS="-L$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/lib"
@@ -53,15 +57,18 @@ $($(PKG)_BINS_AFPD_TARGET_DIR): $($(PKG)_DEST_DIR)/sbin/%: $($(PKG)_DIR)/etc/afp
 $($(PKG)_BINS_DBD_TARGET_DIR): $($(PKG)_DEST_DIR)/sbin/%: $($(PKG)_DIR)/etc/cnid_dbd/%
 	$(INSTALL_BINARY_STRIP)
 
+$($(PKG)_BINS_AFPPASSWD_TARGET_DIR): $($(PKG)_DEST_DIR)/sbin/%: $($(PKG)_DIR)/bin/afppasswd/%
+	$(INSTALL_BINARY_STRIP)
+
 $(pkg):
 
-$(pkg)-precompiled: $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_BINS_AFPD_TARGET_DIR) $($(PKG)_BINS_DBD_TARGET_DIR)
+$(pkg)-precompiled: $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_BINS_AFPD_TARGET_DIR) $($(PKG)_BINS_DBD_TARGET_DIR) $($(PKG)_BINS_AFPPASSWD_TARGET_DIR)
 
 $(pkg)-clean:
 	-$(SUBMAKE) -C $(NETATALK_DIR) clean
 	$(RM) $(NETATALK_FREETZ_CONFIG_FILE)
 
 $(pkg)-uninstall:
-	$(RM) $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_BINS_AFPD_TARGET_DIR) $($(PKG)_BINS_DBD_TARGET_DIR)
+	$(RM) $($(PKG)_LIBS_TARGET_DIR) $($(PKG)_BINS_AFPD_TARGET_DIR) $($(PKG)_BINS_DBD_TARGET_DIR) $($(PKG)_BINS_AFPPASSWD_TARGET_DIR)
 
 $(PKG_FINISH)
