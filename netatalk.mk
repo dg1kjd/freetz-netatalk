@@ -3,11 +3,11 @@ $(PKG)_SOURCE := $(pkg)-$($(PKG)_VERSION).tar.gz
 $(PKG)_SOURCE_MD5 := d5c9262896338cc1402a49c0f8ca2157
 $(PKG)_SITE := @SF/netatalk
 
-$(PKG)_LIBS := uams_guest uams_dhx_passwd
+$(PKG)_LIBS := uams_guest uams_dhx_passwd uams_dhx2_passwd
 $(PKG)_LIBS_BUILD_DIR := $($(PKG)_LIBS:%=$($(PKG)_DIR)/etc/uams/.libs/%.so)
 $(PKG)_LIBS_TARGET_DIR := $($(PKG)_LIBS:%=$($(PKG)_DEST_LIBDIR)/%.so)
 
-$(PKG)_BINS_AFPD := afpd hash
+$(PKG)_BINS_AFPD := afpd afppasswd hash
 $(PKG)_BINS_AFPD_BUILD_DIR := $($(PKG)_BINS_AFPD:%=$($(PKG)_DIR)/etc/afpd/%)
 $(PKG)_BINS_AFPD_TARGET_DIR := $($(PKG)_BINS_AFPD:%=$($(PKG)_DEST_DIR)/sbin/%)
 
@@ -33,6 +33,7 @@ $(PKG)_CONFIGURE_OPTIONS +=--with-includedir="$(TARGET_TOOLCHAIN_STAGING_DIR)/us
 $(PKG)_CONFIGURE_OPTIONS +=--with-libdir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/lib"
 $(PKG)_CONFIGURE_OPTIONS +=--with-ssl-dir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
 $(PKG)_CONFIGURE_OPTIONS +=--with-uams-path="/usr/lib/freetz"
+$(PKG)_CONFIGURE_OPTIONS +=--sysconfdir="/mod/etc"
 
 $(PKG_SOURCE_DOWNLOAD)
 $(PKG_UNPACKED)
