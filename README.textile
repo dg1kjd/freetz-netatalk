@@ -5,12 +5,8 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-Netatalk kompiliert und installiert die Binaries korrekt. CGI und Konfigurationsdateien sind
-gemacht, aber noch nicht völlig getestet. Ausserdem noch dieses hier:
-
-pre. 
-fritz root # cnid_dbd
-cnid_dbd: can't load library 'libdb-4.8.so'
+CGI und Konfigurationsdateien sind gemacht, aber noch nicht völlig getestet. Die Binaries haben bis vor
+kurzem noch durchkompiliert, aber uams_dhx2_passwd.so macht im Moment noch Probleme.
 
 
 h2. Leute
