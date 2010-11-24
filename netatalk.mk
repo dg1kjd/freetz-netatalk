@@ -3,7 +3,7 @@ $(PKG)_SOURCE := $(pkg)-$($(PKG)_VERSION).tar.gz
 $(PKG)_SOURCE_MD5 := d5c9262896338cc1402a49c0f8ca2157
 $(PKG)_SITE := @SF/netatalk
 
-$(PKG)_LIBS := uams_guest uams_dhx_passwd uams_dhx2_passwd
+$(PKG)_LIBS := uams_guest uams_dhx2_passwd
 $(PKG)_LIBS_BUILD_DIR := $($(PKG)_LIBS:%=$($(PKG)_DIR)/etc/uams/.libs/%.so)
 $(PKG)_LIBS_TARGET_DIR := $($(PKG)_LIBS:%=$($(PKG)_DEST_LIBDIR)/%.so)
 
@@ -15,7 +15,7 @@ $(PKG)_BINS_DBD := cnid_dbd cnid_metad dbd
 $(PKG)_BINS_DBD_BUILD_DIR := $($(PKG)_BINS_DBD:%=$($(PKG)_DIR)/etc/cnid_dbd/%)
 $(PKG)_BINS_DBD_TARGET_DIR := $($(PKG)_BINS_DBD:%=$($(PKG)_DEST_DIR)/sbin/%)
 
-$(PKG)_DEPENDS_ON := db libgcrypt openssl
+$(PKG)_DEPENDS_ON := db libgcrypt
 
 $(PKG)_CONFIGURE_OPTIONS +=--disable-afs
 $(PKG)_CONFIGURE_OPTIONS +=--enable-hfs
@@ -29,10 +29,10 @@ $(PKG)_CONFIGURE_OPTIONS +=--disable-admin-group
 $(PKG)_CONFIGURE_OPTIONS +=--disable-srvloc
 $(PKG)_CONFIGURE_OPTIONS +=--with-cnid-default-backend=dbd
 $(PKG)_CONFIGURE_OPTIONS +=--with-bdb="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
-$(PKG)_CONFIGURE_OPTIONS +=--with-includedir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/include"
-$(PKG)_CONFIGURE_OPTIONS +=--with-libdir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/lib"
-$(PKG)_CONFIGURE_OPTIONS +=--with-ssl-dir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
+$(PKG)_CONFIGURE_OPTIONS +=--with-libgcrypt-dir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
 $(PKG)_CONFIGURE_OPTIONS +=--with-uams-path="/usr/lib/freetz"
+$(PKG)_CONFIGURE_OPTIONS +=--with-libdir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/lib"
+$(PKG)_CONFIGURE_OPTIONS +=--with-includedir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr/include"
 $(PKG)_CONFIGURE_OPTIONS +=--sysconfdir="/mod/etc"
 
 $(PKG_SOURCE_DOWNLOAD)
