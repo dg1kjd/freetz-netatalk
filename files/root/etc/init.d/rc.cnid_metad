@@ -4,7 +4,6 @@ DAEMON=netatalk
 DAEMON_LONG_NAME="Netatalk-cnid_metad"
 DAEMON_BIN=cnid_metad
 DAEMON_CONFIG=/mod/etc/netatalk/afpd.conf
-CONF_ENABLED=NETATALK_CNID_METAD_ENABLED
 . /etc/init.d/modlibrc
 
 
@@ -19,7 +18,7 @@ case $1 in
 		fi
 		modreg daemon -h -n netatalk-cnid_metad -r rc.$DAEMON_BIN -p netatalk cnid_metad
 
-		modlib_start $NETATALK_CNID_METAD_ENABLED
+		modlib_start $NETATALK_ENABLED
 		;;
 	unload)
 		modunreg daemon netatalk cnid_metad
