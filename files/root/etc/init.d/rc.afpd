@@ -11,7 +11,7 @@ start() {
 	modlib_startdaemon $DAEMON_BIN \
 	  -F $DAEMON_CONFIG \
 	  -f /mod/etc/netatalk/AppleVolumes.default \
-	  -P /var/run/$DAEMON_BIN.pid
+	  -P /var/run/$DAEMON_BIN.pid \
 	  -c $NETATALK_MAX_CLIENTS
 }
 
