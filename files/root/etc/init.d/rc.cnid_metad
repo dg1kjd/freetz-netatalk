@@ -3,7 +3,6 @@
 DAEMON=netatalk
 DAEMON_LONG_NAME="Netatalk-cnid_metad"
 DAEMON_BIN=cnid_metad
-DAEMON_CONFIG=/mod/etc/netatalk/afpd.conf
 . /etc/init.d/modlibrc
 
 
