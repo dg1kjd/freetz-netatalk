@@ -47,7 +47,7 @@ $($(PKG)_LIBS_BUILD_DIR) $($(PKG)_BINS_AFPD_BUILD_DIR) $($(PKG)_BINS_DBD_BUILD_D
 
 $($(PKG)_LIBS_TARGET_DIR): $($(PKG)_DEST_LIBDIR)/%: $($(PKG)_DIR)/etc/uams/.libs/%
 	$(INSTALL_LIBRARY_STRIP)
-	ln -s uams_dhx2_passwd.so $($(PKG)_DEST_LIBDIR)/uams_dhx2.so
+	ln -sf uams_dhx2_passwd.so $(NETATALK_DEST_LIBDIR)/uams_dhx2.so
 
 $($(PKG)_BINS_AFPD_TARGET_DIR): $($(PKG)_DEST_DIR)/sbin/%: $($(PKG)_DIR)/etc/afpd/%
 	$(INSTALL_BINARY_STRIP)
