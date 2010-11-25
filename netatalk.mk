@@ -11,7 +11,7 @@ $(PKG)_BINS_AFPD := afpd hash
 $(PKG)_BINS_AFPD_BUILD_DIR := $($(PKG)_BINS_AFPD:%=$($(PKG)_DIR)/etc/afpd/%)
 $(PKG)_BINS_AFPD_TARGET_DIR := $($(PKG)_BINS_AFPD:%=$($(PKG)_DEST_DIR)/sbin/%)
 
-$(PKG)_BINS_DBD := cnid_dbd cnid_metad
+$(PKG)_BINS_DBD := cnid_dbd cnid_metad dbd
 $(PKG)_BINS_DBD_BUILD_DIR := $($(PKG)_BINS_DBD:%=$($(PKG)_DIR)/etc/cnid_dbd/%)
 $(PKG)_BINS_DBD_TARGET_DIR := $($(PKG)_BINS_DBD:%=$($(PKG)_DEST_DIR)/sbin/%)
 
