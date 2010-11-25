@@ -5,12 +5,9 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-Die Libs und Binaries kompilieren. CGI und Konfigurationsdateien sind gemacht, aber noch nicht völlig 
-getestst. Es geht aber langsam auf die Zielgerade.
+Die Libs und Binaries kompilieren. CGI und Konfigurationsdateien sind gemacht, aber noch nicht völlig getestst. Es geht aber langsam auf die Zielgerade.
 
-Libgcrypt wird von Freetz derzeit noch ohne CAST5 Cipher kompiliert, daher ist ein kleiner manueller
-Eingriff nötig (siehe Installation), ansonsten wird uams_dhx2_passwd.so nicht kompiliert. Eine Anpassung
-ist mit dem "Freetz Trac Ticket #1094":http://trac.freetz.org/ticket/1094 unterwegs.
+Libgcrypt wird von Freetz derzeit noch ohne CAST5 Cipher kompiliert, daher ist ein kleiner manueller Eingriff nötig (siehe Installation), ansonsten wird uams_dhx2_passwd.so nicht kompiliert. Eine Anpassung ist mit dem "Freetz Trac Ticket #1094":http://trac.freetz.org/ticket/1094 unterwegs.
 
 
 h2. Leute
