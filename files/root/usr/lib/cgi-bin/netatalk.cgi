@@ -8,7 +8,6 @@ select "$NETATALK_LOG_LEVEL" \
   LOG_SEVERE:logsevere \
   LOG_ERROR:logerror \
   LOG_WARN:logwarn \
-  LOG_NOTE:lognote \
   LOG_INFO:loginfo \
   LOG_DEBUG:logdebug \
   LOG_MAXDEBUG:logmaxdebug \
@@ -18,8 +17,8 @@ sec_begin '$(lang de:"Starttyp" en:"Start type")'
 
 cat << EOF
 <p>
-<input id="e1" type="radio" name="enabled" value="yes"$auto_chk><label for="e1">$(lang de:"Automatisch" en:"Automatic")</label>
-<input id="e2" type="radio" name="enabled" value="no"$man_chk><label for="e2">$(lang de:"Manuell" en:"Manual")</label>
+<input id='e1' type='radio' name='enabled' value='yes'$auto_chk><label for='e1'>$(lang de:"Automatisch" en:"Automatic")</label>
+<input id='e2' type='radio' name='enabled' value='no'$man_chk><label for='e2'>$(lang de:"Manuell" en:"Manual")</label>
 </p>
 EOF
 
@@ -28,8 +27,8 @@ sec_begin '$(lang de:"Einstellungen" en:"Settings")'
 
 cat << EOF
 <ul>
-<li><a href="$(href file netatalk afpd_conf)">afpd.conf</a></li>
-<li><a href="$(href file netatalk applevolumes_default)">AppleVolumes.default</a></li>
+<li><a href='$(href file netatalk afpd_conf)'>afpd.conf</a></li>
+<li><a href='$(href file netatalk applevolumes_default)'>AppleVolumes.default</a></li>
 </ul>
 EOF
 

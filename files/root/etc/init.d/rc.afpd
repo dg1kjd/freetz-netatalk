@@ -8,7 +8,6 @@ DAEMON_CONFIG=/mod/etc/netatalk/afpd.conf
 
 start() {
 	modlib_startdaemon $DAEMON_BIN \
-	  -l $NETATALK_LOG_LEVEL \
 	  -F $DAEMON_CONFIG \
 	  -f /mod/etc/netatalk/AppleVolumes.default \
 	  -P /var/run/$DAEMON_BIN.pid \
