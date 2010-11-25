@@ -30,6 +30,7 @@ case $1 in
 		modreg file netatalk applevolumes_default 'AppleVolumes.default' 1 "applevolumes_default"
 		modreg daemon netatalk
 
+    config
 		do_cnid_metad
 		do_afpd
 		;;
