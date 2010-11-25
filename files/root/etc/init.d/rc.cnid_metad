@@ -5,9 +5,9 @@ DAEMON_LONG_NAME="Netatalk-cnid_metad"
 DAEMON_BIN=cnid_metad
 . /etc/init.d/modlibrc
 
-
 start() {
-	modlib_startdaemon $DAEMON_BIN
+	modlib_startdaemon $DAEMON_BIN \
+	  -l $NETATALK_LOG_LEVEL
 }
 
 case $1 in

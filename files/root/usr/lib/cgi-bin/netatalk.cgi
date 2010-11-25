@@ -4,6 +4,15 @@ PATH=/bin:/usr/bin:/sbin:/usr/sbin
 . /usr/lib/libmodcgi.sh
 
 check "$NETATALK_ENABLED" yes:auto "*":man
+select "$NETATALK_LOG_LEVEL" \
+  LOG_SEVERE:logsevere \
+  LOG_ERROR:logerror \
+  LOG_WARN:logwarn \
+  LOG_NOTE:lognote \
+  LOG_INFO:loginfo \
+  LOG_DEBUG:logdebug \
+  LOG_MAXDEBUG:logmaxdebug \
+	"*":lognote
 
 sec_begin '$(lang de:"Starttyp" en:"Start type")'
 
@@ -28,8 +37,23 @@ sec_end
 sec_begin '$(lang de:"Netatalk" en:"Netatalk")'
 
 cat << EOF
-<p>$(lang de:"Maximale Anzahl Verbindungen" en:"Maximum number of clients"):<br>
-<input type="text" name="max_clients" size="4" maxlength="3" value="$(html "$NETATALK_MAX_CLIENTS")"></p>
+<p>
+$(lang de:"Maximale Anzahl Verbindungen" en:"Maximum number of clients"):<br>
+<input type="text" name="max_clients" size="4" maxlength="3" value="$(html "$NETATALK_MAX_CLIENTS")">
+</p>
+
+<p>
+<label for='log_level'>$(lang de:"Log-Level" en:"Log level"): </label>
+<select name='log_level' id='log_level'>
+<option $logsevere_sel>LOG_SEVERE</option>
+<option $logerror_sel>LOG_ERROR</option>
+<option $logwarn_sel>LOG_WARN</option>
+<option $lognote_sel>LOG_NOTE</option>
+<option $loginfo_sel>LOG_INFO</option>
+<option $logdebug_sel>LOG_DEBUG</option>
+<option $logmaxdebug_sel>LOG_MAXDEBUG</option>
+</select>
+</p>
 EOF
 
 sec_end
