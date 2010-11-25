@@ -38,8 +38,8 @@ sec_begin '$(lang de:"Netatalk" en:"Netatalk")'
 
 cat << EOF
 <p>
-$(lang de:"Maximale Anzahl Verbindungen" en:"Maximum number of clients"):<br>
-<input type="text" name="max_clients" size="4" maxlength="3" value="$(html "$NETATALK_MAX_CLIENTS")">
+<label for='max_clients'>$(lang de:"Maximale Anzahl Verbindungen" en:"Maximum number of clients"): </label>
+<input name='max_clients' type='text' size='4' maxlength='3' value='$(html "$NETATALK_MAX_CLIENTS")'>
 </p>
 
 <p>
