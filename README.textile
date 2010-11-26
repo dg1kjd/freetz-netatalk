@@ -9,9 +9,7 @@ Alle Binaries kompilieren (siehe folgender Absatz) und werden korrekt installier
 
 Libgcrypt wird von Freetz derzeit noch ohne CAST5 Cipher kompiliert, daher ist ein kleiner manueller Eingriff nötig (siehe Installation), ansonsten wird uams_dhx2_passwd.so nicht kompiliert. Eine Anpassung ist mit dem "Freetz Trac Ticket #1094":http://trac.freetz.org/ticket/1094 unterwegs.
 
-Als Gast können Volumes gemountet werden, die Authentifizierung mit DHX2 funktioniert noch nicht. Ausserdem streiken cnid_dbd und dbd noch, da sie angeblich libdb nicht finden können. Daher werden die Volumes nur readonly gemountet.
-
-Das Logging von afpd funktioniert nicht, das kann aber auch ein Bug upstream sein. Auf jeden Fall macht es die Arbeit nicht einfacher.
+Als Gast können Volumes gemountet werden, die Authentifizierung mit DHX2 funktioniert noch nicht. Ausserdem funktioniert das Logging von afpd nicht, das kann aber auch ein Bug upstream sein. Auf jeden Fall macht es die Arbeit nicht einfacher.
 
 
 h2. Leute
