@@ -5,11 +5,13 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-Alle Binaries kompilieren (siehe folgender Absatz) und werden korrekt installiert. Das CGI ist auch gemacht, Netatalk lässt sich also über das Freetz-Webinterface konfigurieren, starten und stoppen.
+Alle Binaries kompilieren und werden korrekt installiert. Das CGI ist auch gemacht, Netatalk lässt sich also über das Freetz-Webinterface konfigurieren, starten und stoppen. Als Gast können Volumes readonly gemountet werden.
 
-Libgcrypt wird von Freetz derzeit noch ohne CAST5 Cipher kompiliert, daher ist ein kleiner manueller Eingriff nötig (siehe Installation), ansonsten wird uams_dhx2_passwd.so nicht kompiliert. Eine Anpassung ist mit dem "Freetz Trac Ticket #1094":http://trac.freetz.org/ticket/1094 unterwegs.
+Das Verzeichnis .AppleDB wird auf den Volumes angelegt, trotzdem 
 
-Als Gast können Volumes gemountet werden, die Authentifizierung mit DHX2 funktioniert noch nicht. Ausserdem funktioniert das Logging von afpd nicht, das kann aber auch ein Bug upstream sein. Auf jeden Fall macht es die Arbeit nicht einfacher.
+Obwohl .AppleDB auf den gemounteten Volumes angelegt wird, loggt cnid_metad einen Fehler, legt nur eine temporäre Datenbank im RAM an und setzt es daher auf readonly.
+
+Als Gast können Volumes gemountet werden, mit Authentifizierung DHX2 allerdings noch nicht.
 
 
 h2. Leute
