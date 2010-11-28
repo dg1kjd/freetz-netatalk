@@ -27,6 +27,7 @@ case $1 in
 		modlib_start
 		;;
 	stop)
+		killall cnid_metad   # workaround until cnid_metad uses a pid file
 		modlib_stop
 		;;
 	restart)
