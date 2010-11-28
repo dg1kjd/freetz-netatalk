@@ -27,8 +27,8 @@ sec_begin '$(lang de:"Einstellungen" en:"Settings")'
 
 cat << EOF
 <ul>
-<li><a href='$(href file netatalk afpd_conf)'>afpd.conf</a></li>
-<li><a href='$(href file netatalk applevolumes_default)'>AppleVolumes.default</a></li>
+<li><a href='$(href file netatalk applevolumes_default)'>$(lang de:"Freigaben" en:"Shares") (AppleVolumes.default)</a></li>
+<li><a href='$(href file netatalk afpd_conf)'>$(lang de:"Virtuelle Datei-Server" en:"Virtual fileservers") (afpd.conf)</a></li>
 </ul>
 EOF
 

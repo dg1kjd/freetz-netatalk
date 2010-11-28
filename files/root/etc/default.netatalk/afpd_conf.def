@@ -1,5 +1,5 @@
-CAPTION='Netatalk: afpd.conf'
-DESCRIPTION='<a href="http://netatalk.sourceforge.net/2.1/htmldocs/afpd.conf.5.html" target="_blank">$(lang de:"Syntax siehe Dokumentation" en:"Syntax see documentation")</a><br>
+CAPTION='Netatalk: $(lang de:"Virtuelle Datei-Server" en:"Virtual Fileservers")'
+DESCRIPTION='<a href="http://netatalk.sourceforge.net/2.1/htmldocs/afpd.conf.5.html" target="_blank">$(lang de:"Syntax siehe Dokumentation von afpd.conf" en:"Syntax see documentation of afpd.conf")</a><br>
 ($(lang de:"Beispiel" en:"Example"): "Fritzbox" -uamlist uams_dhx2.so)'
 
 CONFIG_FILE='/tmp/flash/netatalk/afpd_conf'
