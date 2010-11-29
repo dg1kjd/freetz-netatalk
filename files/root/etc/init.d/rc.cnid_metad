@@ -8,6 +8,7 @@ DAEMON_BIN=cnid_metad
 start() {
 	modlib_startdaemon $DAEMON_BIN \
 	  -l $NETATALK_LOG_LEVEL
+	  -s /sbin/cnid_dbd
 }
 
 case $1 in
