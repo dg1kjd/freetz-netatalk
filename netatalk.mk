@@ -19,21 +19,21 @@ $(PKG)_DEPENDS_ON := db libgcrypt
 
 $(PKG)_CONFIGURE_PRE_CMDS += $(call PKG_PREVENT_RPATH_HARDCODING,./configure)
 
-$(PKG)_CONFIGURE_OPTIONS +=--disable-afs
-$(PKG)_CONFIGURE_OPTIONS +=--disable-ddp
-$(PKG)_CONFIGURE_OPTIONS +=--disable-debugging
-$(PKG)_CONFIGURE_OPTIONS +=--disable-shell-check
-$(PKG)_CONFIGURE_OPTIONS +=--disable-timelord
 $(PKG)_CONFIGURE_OPTIONS +=--disable-a2boot
+$(PKG)_CONFIGURE_OPTIONS +=--disable-afs
 $(PKG)_CONFIGURE_OPTIONS +=--disable-cups
-$(PKG)_CONFIGURE_OPTIONS +=--disable-tcp-wrappers
-$(PKG)_CONFIGURE_OPTIONS +=--disable-admin-group
+$(PKG)_CONFIGURE_OPTIONS +=--disable-ddp
 $(PKG)_CONFIGURE_OPTIONS +=--disable-srvloc
+$(PKG)_CONFIGURE_OPTIONS +=--disable-timelord
+$(PKG)_CONFIGURE_OPTIONS +=--disable-admin-group
+$(PKG)_CONFIGURE_OPTIONS +=--disable-shell-check
+$(PKG)_CONFIGURE_OPTIONS +=--disable-tcp-wrappers
 $(PKG)_CONFIGURE_OPTIONS +=--with-cnid-default-backend=dbd
 $(PKG)_CONFIGURE_OPTIONS +=--with-uams-path="/usr/lib/freetz"
 $(PKG)_CONFIGURE_OPTIONS +=--with-bdb="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
 $(PKG)_CONFIGURE_OPTIONS +=--with-libgcrypt-dir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
 $(PKG)_CONFIGURE_OPTIONS +=--sysconfdir="/mod/etc"
+$(PKG)_CONFIGURE_OPTIONS +=--disable-debugging
 
 $(PKG_SOURCE_DOWNLOAD)
 $(PKG_UNPACKED)
