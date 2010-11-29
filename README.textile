@@ -7,9 +7,7 @@ h2. Stand der Dinge
 
 Alle Binaries kompilieren und werden korrekt installiert. Das CGI ist auch gemacht, Netatalk lässt sich also über das Freetz-Webinterface konfigurieren, starten und stoppen. Als Gast können Volumes readonly gemountet werden.
 
-Das Verzeichnis .AppleDB wird auf den Volumes angelegt, trotzdem 
-
-Obwohl .AppleDB auf den gemounteten Volumes angelegt wird, loggt cnid_metad einen Fehler, legt nur eine temporäre Datenbank im RAM an und setzt es daher auf readonly.
+Obwohl .AppleDB auf den gemounteten Volumes angelegt wird, loggt cnid_metad einen Fehler, legt nur eine temporäre Datenbank im RAM an und setzt es daher auf readonly. Es bleiben ausserdem cnid_dbd Prozesse liegen.
 
 Als Gast können Volumes gemountet werden, mit Authentifizierung DHX2 allerdings noch nicht.
 
@@ -43,6 +41,26 @@ h2. Pakete
 pre. 
 FREETZ_PACKAGE_NETATALK
   Package selection -> Testing -> Netatalk
+
+
+h2. Shell
+
+If you prefer to develop or debug in the shell, you should start and stop Netatalk once from the webinterface and then work with the following configuration files directly:
+
+* /mod/etc/netatalk/afpd.conf
+* /mod/etc/netatalk/AppleVolumes.default
+
+The following commands start ...
+
+pre.
+  cnid_metad -s /sbin/cnid_dbd -l LOG_INFO
+  afpd -F /mod/etc/netatalk/afpd.conf -f /mod/etc/netatalk/AppleVolumes.default -P /var/run/afpd.pid
+
+... and stup the daemons:
+
+pre.
+  killall afpd
+  killall cnid_metad
 
 
 h2. Links
