@@ -33,7 +33,11 @@ $(PKG)_CONFIGURE_OPTIONS +=--with-uams-path="/usr/lib/freetz"
 $(PKG)_CONFIGURE_OPTIONS +=--with-bdb="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
 $(PKG)_CONFIGURE_OPTIONS +=--with-libgcrypt-dir="$(TARGET_TOOLCHAIN_STAGING_DIR)/usr"
 $(PKG)_CONFIGURE_OPTIONS +=--sysconfdir="/mod/etc"
-$(PKG)_CONFIGURE_OPTIONS +=--disable-debugging
+# $(PKG)_CONFIGURE_OPTIONS +=--disable-debugging
+
+# $(PKG)_CONFIGURE_OPTIONS +=--disable-locking
+# $(PKG)_CONFIGURE_OPTIONS +=--disable-sendfile
+# $(PKG)_CONFIGURE_OPTIONS +=--with-shadow
 
 $(PKG_SOURCE_DOWNLOAD)
 $(PKG_UNPACKED)
