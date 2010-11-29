@@ -19,7 +19,6 @@ $(PKG)_DEPENDS_ON := db libgcrypt
 
 $(PKG)_CONFIGURE_PRE_CMDS += $(call PKG_PREVENT_RPATH_HARDCODING,./configure)
 
-$(PKG)_CONFIGURE_OPTIONS +=--enable-hfs
 $(PKG)_CONFIGURE_OPTIONS +=--disable-afs
 $(PKG)_CONFIGURE_OPTIONS +=--disable-ddp
 $(PKG)_CONFIGURE_OPTIONS +=--disable-debugging
