@@ -5,11 +5,16 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-Alle Binaries kompilieren und werden korrekt installiert. Das CGI ist auch gemacht, Netatalk lässt sich also über das Freetz-Webinterface konfigurieren, starten und stoppen. Als Gast können Volumes readonly gemountet werden.
+Alle Binaries kompilieren und werden korrekt installiert. Das CGI ist auch gemacht, Netatalk lässt sich also über das Freetz-Webinterface konfigurieren, starten und stoppen.
 
-Obwohl .AppleDB auf den gemounteten Volumes angelegt wird, loggt cnid_metad einen Fehler, legt nur eine temporäre Datenbank im RAM an und setzt es daher auf readonly. Es bleiben ausserdem cnid_dbd Prozesse liegen.
+Das CNID-Backend "dbd" (Berkeley DB) funktioniert nicht. Die Datenbank wird auf dem gemounteten Volume nicht angelegt, obwohl die Permissions das zulassen. In der Folge loggt afpd den folgenden Fehler:
 
-Als Gast können Volumes gemountet werden, mit Authentifizierung DHX2 allerdings noch nicht.
+pre.
+dbd_rpc: Error reading header from fd (db_dir /var/media/ftp/uStor04): Resource temporarily unavailable
+
+Das CNID-Backend "tdb" (Samba Trivial Db) funktioniert, ist aber nicht für Volumes geeignet, die mehr als einmal gemountet werden.
+
+Die Authentifizierung mit DHX2 funktioniert noch nicht. Als Gast können Volumes aber gemountet werden, wobei dann die Daten auf der Platte für "nobody" les- und/oder schreibbar sein müssen.
 
 
 h2. Leute
@@ -31,7 +36,6 @@ svn checkout http://svn.freetz.org/trunk
 git clone git@github.com:{USERNAME}/freetz-netatalk.git netatalk
 ln -s ../../netatalk trunk/make/
 sed -i 's%ncftp/Config.in%ncftp/Config.in\nsource make/netatalk/Config.in%' trunk/make/Config.in
-sed -i 's%arcfour des aes%arcfour des aes cast5%' trunk/make/libs/libgcrypt.mk
 cd trunk
 make menuconfig
 
