@@ -5,16 +5,14 @@ If you don't speak German but would like to work on this project, please let me 
 
 h2. Stand der Dinge
 
-Alle Binaries kompilieren und werden korrekt installiert. Das CGI ist auch gemacht, Netatalk lässt sich also über das Freetz-Webinterface konfigurieren, starten und stoppen.
+Alle Binaries kompilieren und werden korrekt installiert. Das CGI ist auch gemacht, Netatalk lässt sich also über das Freetz-Webinterface konfigurieren, starten und stoppen. Das Mounten als Gast oder als User ist möglich.
 
-Das CNID-Backend "dbd" (Berkeley DB) funktioniert nicht. Die Datenbank wird auf dem gemounteten Volume nicht angelegt, obwohl die Permissions das zulassen. In der Folge loggt afpd den folgenden Fehler:
+Das CNID-Backend "dbd" (Berkeley DB via Daemon) funktioniert nicht. Die Datenbank wird auf dem gemounteten Volume nicht angelegt, obwohl die Permissions das zulassen. In der Folge loggt afpd den folgenden Fehler:
 
 pre. 
-dbd_rpc: Error reading header from fd (db_dir /var/media/ftp/uStor04): Resource temporarily unavailable
+dbd_rpc: Error reading header from fd (db_dir /var/media/ftp/uStor01): Resource temporarily unavailable
 
 Das CNID-Backend "tdb" (Samba Trivial Db) funktioniert, ist aber nicht für Volumes geeignet, die mehr als einmal gemountet werden.
-
-Die Authentifizierung mit DHX2 funktioniert noch nicht. Als Gast können Volumes aber gemountet werden, wobei dann die Daten auf der Platte für "nobody" les- und/oder schreibbar sein müssen.
 
 
 h2. Leute
@@ -49,22 +47,22 @@ FREETZ_PACKAGE_NETATALK
 
 h2. Shell
 
-If you prefer to develop or debug in the shell, you should start and stop Netatalk once from the webinterface and then work with the following configuration files directly:
+Wer lieber in der Shell herumprobiert, muss einmal Netatalk über das Webinterface starten und stoppen. Dadurch werden die folgenden Konfigurationsdateien angelegt und können danach direkt bearbeitet werden:
 
 * /mod/etc/netatalk/afpd.conf
 * /mod/etc/netatalk/AppleVolumes.default
 
-The following commands start ...
+Starten der Daemons:
 
 pre.
   cnid_metad -s /sbin/cnid_dbd -l LOG_INFO
   afpd -F /mod/etc/netatalk/afpd.conf -f /mod/etc/netatalk/AppleVolumes.default -P /var/run/afpd.pid
 
-... and stup the daemons:
+Stoppen der Daemons:
 
 pre.
-  killall afpd
-  killall cnid_metad
+  killall -SIGTERM afpd
+  killall -SIGTERM cnid_metad
 
 
 h2. Links
