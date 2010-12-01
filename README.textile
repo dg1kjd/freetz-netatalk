@@ -9,7 +9,7 @@ Alle Binaries kompilieren und werden korrekt installiert. Das CGI ist auch gemac
 
 Das CNID-Backend "dbd" (Berkeley DB) funktioniert nicht. Die Datenbank wird auf dem gemounteten Volume nicht angelegt, obwohl die Permissions das zulassen. In der Folge loggt afpd den folgenden Fehler:
 
-pre.
+pre. 
 dbd_rpc: Error reading header from fd (db_dir /var/media/ftp/uStor04): Resource temporarily unavailable
 
 Das CNID-Backend "tdb" (Samba Trivial Db) funktioniert, ist aber nicht für Volumes geeignet, die mehr als einmal gemountet werden.
